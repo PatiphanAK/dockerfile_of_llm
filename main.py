@@ -8,7 +8,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 app = FastAPI(title="SuperAI Demo")
 
-MODEL_DIR = os.environ.get("MODEL_DIR", "/models")
+MODEL_DIR = os.environ.get("MODEL_DIR", "/content/model")
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
@@ -58,7 +58,7 @@ def health():
 def infer(req: InferRequest):
     try:
         tokenizer, model = load_model()
-    except Exception as exc:  # model failed to load
+    except Exception as exc:
         raise HTTPException(status_code=503, detail=f"Model not available: {exc}")
 
     inputs = tokenizer(req.prompt, return_tensors="pt").to(model.device)
