@@ -29,7 +29,6 @@ RUN uv pip install --index-url ${TORCH_INDEX_URL} torch
 COPY requirements.txt /tmp/requirements.txt
 RUN uv pip install -r /tmp/requirements.txt
 
-# ── runtime ──
 FROM ubuntu:24.04
 
 RUN apt-get update && \
@@ -45,7 +44,7 @@ RUN apt-get update && \
 
 COPY --from=builder /opt/python /opt/python
 COPY --from=builder /opt/venv /opt/venv
-COPY app/ /app/
+COPY . /app/
 
 ENV PATH="/opt/venv/bin:$PATH" \
     PYTHONUNBUFFERED=1 \
