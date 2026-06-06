@@ -1,7 +1,7 @@
 ARG UV_VERSION=0.11.19
 FROM ubuntu:24.04 AS builder
-
-COPY --from=ghcr.io/astral-sh/uv:${UV_VERSION} /uv /uvx /bin/
+FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv
+COPY --from=uv /uv /uvx /bin/
 
 ARG PYTHON_VERSION=3.12
 ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cu128
