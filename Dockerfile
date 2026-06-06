@@ -26,10 +26,8 @@ RUN uv pip install --index-url ${TORCH_INDEX_URL} torch
 COPY requirements.txt /tmp/requirements.txt
 RUN uv pip install -r /tmp/requirements.txt
 
-# ── Runtime: Ubuntu 24.04 ──────────────────────────────────────────
 FROM ubuntu:24.04
 
-# Runtime libs ที่ CUDA/PyTorch ต้องการ
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
