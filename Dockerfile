@@ -1,7 +1,10 @@
 ARG UV_VERSION=0.11.19
+
 FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv
-COPY --from=uv /uv /uvx /bin/
+
 FROM ubuntu:24.04 AS builder
+
+COPY --from=uv /uv /uvx /bin/
 
 ARG PYTHON_VERSION=3.12
 ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cu128
@@ -26,6 +29,7 @@ RUN uv pip install --index-url ${TORCH_INDEX_URL} torch
 COPY requirements.txt /tmp/requirements.txt
 RUN uv pip install -r /tmp/requirements.txt
 
+# ── runtime ──
 FROM ubuntu:24.04
 
 RUN apt-get update && \
